@@ -6,12 +6,16 @@ import geckodriver_autoinstaller
 import selenium
 from bs4 import BeautifulSoup
 from selenium import webdriver
+from selenium.webdriver.firefox.options import Options
 import requests
 from Product import Product
 import argparse
 from apscheduler.schedulers.blocking import BlockingScheduler
 
 sched = BlockingScheduler()
+options = Options()
+options.headless = True
+driver = webdriver.Firefox(options=options)
 
 
 def get_suits_page(web_driver: selenium.webdriver, size, color):
@@ -104,7 +108,6 @@ def notify_through_ITT(message, key, event="product_list_updated"):
 def find_suit_deals(filter, color, size, event, IFTTT_key):
     start_time = time.time()
     item_in_stock = []
-    driver = webdriver.Firefox()
     while True:
         product_count = len(item_in_stock)
         get_suits_page(driver, size, color)
