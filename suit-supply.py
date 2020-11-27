@@ -2,6 +2,7 @@ import json
 import re
 import time
 
+import geckodriver_autoinstaller
 import selenium
 from bs4 import BeautifulSoup
 from selenium import webdriver
@@ -113,12 +114,12 @@ def find_suit_deals(filter, color, size, event, IFTTT_key):
         if current_product_count > product_count:
             print("Current product count is higher!")
             for product in item_in_stock:
-                notify_through_ITT(product.identity,
-                                   key=IFTTT_key)
+                notify_through_ITT(product.identity, IFTTT_key, event,)
         time.sleep(3600 - ((time.time() - start_time) % 3600))
 
 
 if __name__ == "__main__":
+    geckodriver_autoinstaller.install()
     parser = argparse.ArgumentParser(
         description="Create an IFTTT trigger for stock on Suit Supply Outlet")
     IFTTT_key = parser.add_argument('key', help="Webhook key that can be found under the"
