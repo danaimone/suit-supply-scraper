@@ -1,0 +1,6 @@
+requests~=2.25.0
+beautifulsoup4~=4.9.3
+urllib3~=1.26.2
+twilio~=6.0
+selenium~=3.141.0
+APScheduler~=3.6.3
