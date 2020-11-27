@@ -21,7 +21,7 @@ This recipe will use the Webhook and Notification applets.
 
 ## Usage
 ```bash
-$ python suit-supply.py IFTTT_key filter color size event
+$ python suit_supply.py IFTTT_key filter color size event
 ```
 > ***IFTTT_key***: the webhook key of your IFTTT recipe, found under Webhook documentation
 >
