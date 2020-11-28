@@ -125,10 +125,9 @@ def find_suit_deals(filter, color, size, event, IFTTT_key):
 
 
 def parse_args():
-    global IFTTT_key, filter, color, size, event
     parser = argparse.ArgumentParser(
         description="Create an IFTTT trigger for stock on Suit Supply Outlet")
-    IFTTT_key = parser.add_argument('key',
+    parser.add_argument('key',
                                     help="Webhook key that can be found under the IFTTT Webhook documentation page.")
     parser.add_argument('filter',
                         help="The words you want to filter for. Example: 'Dark Grey Sienna'")
