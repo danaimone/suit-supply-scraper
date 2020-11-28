@@ -37,3 +37,4 @@ $ python suit_supply.py IFTTT_key filter color size event
 ## TODO
 - Add color checking
 - Setup global IFTTT recipe
+- Implement in Huggin
