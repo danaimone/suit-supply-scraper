@@ -100,6 +100,8 @@ def update_json(file_name, product_list):
 
 
 def notify_through_ITT(message, key, event="product_list_updated"):
+    if event is "":
+        event = "product_list_updated"
     print("Notifying a new deal...")
     report = {}
     report["value1"] = message

@@ -19,6 +19,21 @@ This recipe will use the Webhook and Notification applets.
 > The event name that you setup should be "product_list_updated". This can be customized,
 >as the event name is an optional parameter for the program.
 > To install the gecko driver for the first time, pass the --install flag.
+### Setting up an IFTTT Recipe
+1. Navigate to https://ifttt.com/create/ and click Add on If This. 
+2. Search for the Webhooks services
+3. Click on "Receive a web request"
+4. In the event name field, type "product_list_updated"
+5. You should now see the create page again. Click on Add on the Then That button.
+6. Search for the action you'd like. For this setup, we will use Notifications.
+7. Click on Send a rich notification from the IFTTT app.
+8. Set the title to whatever you'd like. 
+9. For the message field, type in ``` {{Value1}} was added to Suit Supply sale. ```
+10. Click on save.
+11. Navigate to https://ifttt.com/maker_webhooks and click on Documentation in the upper right corner.
+12. In here, you will find your IFTTT key at the top. Keep this key a secret! This is what you will pass 
+as the first arg to the program.
+
 
 ## Usage
 ```bash
