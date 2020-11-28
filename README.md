@@ -18,6 +18,7 @@ $ pip install -r requirements.txt
 This recipe will use the Webhook and Notification applets.
 > The event name that you setup should be "product_list_updated". This can be customized,
 >as the event name is an optional parameter for the program.
+> To install the gecko driver for the first time, pass the --install flag.
 
 ## Usage
 ```bash
