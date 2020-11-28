@@ -2,7 +2,6 @@ import json
 import re
 import time
 
-import geckodriver_autoinstaller
 import selenium
 from bs4 import BeautifulSoup
 from selenium import webdriver
@@ -14,8 +13,9 @@ from apscheduler.schedulers.blocking import BlockingScheduler
 
 sched = BlockingScheduler()
 options = Options()
+options.binary_location = r'C:\Program Files\Mozilla Firefox\firefox.exe'
 options.headless = True
-driver = webdriver.Firefox(options=options)
+driver = webdriver.Firefox(options=options, executable_path="geckodriver.exe")
 
 
 def get_suits_page(web_driver: selenium.webdriver, size, color):
@@ -99,6 +99,7 @@ def update_json(file_name, product_list):
 
 
 def notify_through_ITT(message, key, event="product_list_updated"):
+    print("Notifying a new deal...")
     report = {}
     report["value1"] = message
     print(requests.post(f"https://maker.ifttt.com/trigger/{event}/with/key/{key}",
@@ -115,24 +116,35 @@ def find_suit_deals(filter, color, size, event, IFTTT_key):
         item_in_stock = list(in_stock(driver, filter))
         current_product_count = len(item_in_stock)
         if current_product_count > product_count:
-            print("Current product count is higher!")
+            print("Found a new item!")
             for product in item_in_stock:
-                notify_through_ITT(product.identity, IFTTT_key, event,)
+                notify_through_ITT(product.identity, IFTTT_key, event, )
+        print("Searching...")
         time.sleep(3600 - ((time.time() - start_time) % 3600))
 
 
-if __name__ == "__main__":
-    geckodriver_autoinstaller.install()
+def parse_args():
+    global IFTTT_key, filter, color, size, event
     parser = argparse.ArgumentParser(
         description="Create an IFTTT trigger for stock on Suit Supply Outlet")
-    IFTTT_key = parser.add_argument('key', help="Webhook key that can be found under the"
-                                                "IFTTT Webhook documentation page.")
-    filter = parser.add_argument('filter',
-                                 help="The words you want to filter for. Example: 'Dark Grey Sienna'")
-    color = parser.add_argument('color',
-                                helper="The color of the item you are searching for. Example: 'Grey'")
-    size = parser.add_argument('size',
-                               help="The size of the item you're trying to find. Example: 38")
-    event = parser.add_argument('--event',
-                                help="Event webhook name, defaults to 'product_list_updated'")
+    IFTTT_key = parser.add_argument('key',
+                                    help="Webhook key that can be found under the IFTTT Webhook documentation page.")
+    parser.add_argument('filter',
+                        help="The words you want to filter for. Example: 'Dark Grey Sienna'")
+    parser.add_argument('color',
+                        help="The color of the item you are searching for. Example: 'Grey'")
+    parser.add_argument('size',
+                        help="The size of the item you're trying to find. Example: 38")
+    parser.add_argument('--event',
+                        help="Event webhook name, defaults to 'product_list_updated'")
+    return parser.parse_args()
+
+
+if __name__ == "__main__":
+    args = parse_args()
+    IFTTT_key = args.key
+    filter = args.filter
+    color = args.color
+    size = args.size
+    event = args.event
     find_suit_deals(filter, color, size, event, IFTTT_key)
