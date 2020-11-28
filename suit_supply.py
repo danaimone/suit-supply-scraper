@@ -10,6 +10,7 @@ import requests
 from Product import Product
 import argparse
 from apscheduler.schedulers.blocking import BlockingScheduler
+from webdrivermanager import GeckoDriverManager
 
 sched = BlockingScheduler()
 options = Options()
@@ -137,11 +138,21 @@ def parse_args():
                         help="The size of the item you're trying to find. Example: 38")
     parser.add_argument('--event',
                         help="Event webhook name, defaults to 'product_list_updated'")
+    parser.add_argument('--install', type=bool,
+                        help="Installs the correct Gecko Driver if one is not already installed.")
     return parser.parse_args()
+
+
+def install_gecko_driver():
+    gdd = GeckoDriverManager()
+    gdd.download_and_install()
 
 
 if __name__ == "__main__":
     args = parse_args()
+    if args.install:
+        install_gecko_driver()
+
     IFTTT_key = args.key
     filter = args.filter
     color = args.color
